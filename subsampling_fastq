@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Pulled from: http://userweb.eng.gla.ac.uk/umer.ijaz/bioinformatics/subsampling_reads.pdf
+INPUTFILE=$1
+OUTPUTFILE=$2
+klines=${3:-10000} # This sets the default value if third input not detected to 10000, can just as easily be another variable using $varname
+                   # Pulled from: https://jaduks.livejournal.com/7934.html
+
+cat $INPUTFILE | \
+awk '{ printf("%s",$0); n++; \
+if(n%4==0) {printf("\n");} \
+else { printf("\t");} }' | \
+awk -v k=$klines 'BEGIN{srand(systime() + PROCINFO["pid"]);}{s=x++<k?x1:int(rand()*x);if(s<k)R[s]=$0}END{for(i in R)print R[i]}' | \
+awk -F"\t" '{print $1"\n"$2"\n"$3"\n"$4}' | cat > $OUTPUTFILE # I edited this because in the original the $OUTPUTFILE wouldn't expand
+
