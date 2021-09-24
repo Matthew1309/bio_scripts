@@ -1,0 +1,2 @@
+# This seems like a good command to make a test set from
+datasets download genome taxon 'Escherichia coli' --dehydrated --filename ecoli.zip --reference
