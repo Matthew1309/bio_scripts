@@ -10,6 +10,9 @@ rootDataDir = sys.argv[1]
 
 ncbi_accession = []
 organism_list = []
+genome_file_list = []
+absolute_file_path = []
+
 ncbi2org = {}
 
 fastaExt = ['.fa', '.fna', '.faa', '.fasta']
@@ -29,10 +32,12 @@ for filename in os.listdir(rootDataDir): # Loop over passed directory
 
                     for line in handle: # loop over genome file lines
                         if line[0] == '>': # if it is the header line
-                            org_exp = '\s.+[,|\n]' # Start wit ha space, end on a , or a newline
+                            org_exp = '\s.+[,|\n]' # Start with a space, end on a , or a newline
                             organism_name = re.search( org_exp, line )
                             #print(filename, organism_name)
                             ncbi2org[filename] = organism_name.group()[1:-1]
+                            genome_file_list.append( filename2 )
+                            absolute_file_path.append( os.path.abspath(filename2) )
                             try:
                                 organism_list.append( organism_name.group()[1:-1] )
                             except AttributeError:
@@ -45,13 +50,14 @@ for filename in os.listdir(rootDataDir): # Loop over passed directory
 
 #print( f'{len(ncbi_accession)} directories\n{len(organism_list)} Human names\n{len(ncbi2org)} Both' )
 
-with open('relations.txt', 'w') as file:
-    """
+# Write accession, organism name, file of interest, path to file of interest
+with open('relations.tsv', 'w') as file:
     for i in range(len(ncbi_accession)-1):
-        file.write(f'{ncbi_accession[i]}\t{organism_list[i]}\n')
+        file.write(f'{ncbi_accession[i]}\t{organism_list[i]}\t{genome_file_list[i]}\t{absolute_file_path[i]}\n')
 
     finalIndex = len(ncbi_accession) - 1
-    file.write(f'{ncbi_accession[finalIndex]}\t{organism_list[finalIndex]}')
+    file.write(f'{ncbi_accession[finalIndex]}\t{organism_list[finalIndex]}\t{genome_file_list[finalIndex]}\t{absolute_file_path[finalIndex]}\n')
     """
     for key, value in ncbi2org.items():
         file.write(f'{key}\t{value}\n')
+    """

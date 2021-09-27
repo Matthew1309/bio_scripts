@@ -2,9 +2,10 @@
 
 nextflow.enable.dsl=2
 
-workflow {
+workflow get_genomes{
 
   //ref_genome_ch = Channel.fromPath("$params.ref_genome")
+  //println([params.taxon, params.zipName, params.unzippedDir])
   DOWNLOAD_ZIP(params.taxon, params.zipName)
   UNZIP(DOWNLOAD_ZIP.out.zipFile)
   REHYDRATE(UNZIP.out.unzippedDir)
@@ -68,13 +69,13 @@ process REHYDRATE {
 
 
 process COLLECT_NAMES {
-  publishDir params.results
+  publishDir params.results, mode: 'copy'
 
   input:
   path dataDir
 
   output:
-  path "relations.txt" , emit: org_names
+  path "relations.tsv" , emit: org_names
 
   script:
   """
