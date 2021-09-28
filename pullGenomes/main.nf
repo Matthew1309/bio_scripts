@@ -1,85 +1,80 @@
-#!/usr/bin/env Nextflow
+#!/usr/bin/env/Nextflow
 
 nextflow.enable.dsl=2
 
-workflow get_genomes{
+genomeFiles = Channel
+            .fromPath(params.filesFortSCAN)
+            .splitCsv(header:false, sep:"\t")
+            .map{ row -> file(row[3]) }
 
-  //ref_genome_ch = Channel.fromPath("$params.ref_genome")
-  //println([params.taxon, params.zipName, params.unzippedDir])
-  DOWNLOAD_ZIP(params.taxon, params.zipName)
-  UNZIP(DOWNLOAD_ZIP.out.zipFile)
-  REHYDRATE(UNZIP.out.unzippedDir)
-  COLLECT_NAMES(REHYDRATE.out.dataDir)
+workflow{
+
+  TRNASCAN( genomeFiles )
+  TRANSFORM2CSV( TRNASCAN.out.tRNAs )
+
+  COMPILECSV( TRANSFORM2CSV.out.tRNACSVS.collect() )
 
 }
 
-process DOWNLOAD_ZIP {
-  errorStrategy 'ignore'
+
+process TRNASCAN {
+  // Given the paths to genomes, run TRNASCAN
+  // and extract the ss and sequence information
+
+  publishDir "${params.tRNAresults}", mode:'copy'
 
   input:
-  val taxonName
-  val zipName
+  file genome
 
   output:
-  path "${zipName}" , emit: zipFile
+  path "${genome.baseName}.ss" , emit: tRNAs
 
   script:
   def reference = params.reference
+  def threads = ""
+  if (params.max_cpus) { threads = "--thread ${params.max_cpus}"}
   """
-  datasets download genome \\
-     taxon '${taxonName}' \\
-     --dehydrated \\
-     --filename ${zipName} \\
-     ${reference} \\
-     --exclude-genomic-cds
-  """
-
-}
-
-
-process UNZIP {
-  input:
-  path zipFile
-
-  output:
-  path "${zipFile.baseName}" , emit: unzippedDir
-
-  script:
-  """
-  unzip $zipFile -d ${zipFile.baseName}
+  tRNAscan-SE \\
+  ${threads} \\
+  -q \\
+  $params.domain \\
+  -f "${genome.baseName}.ss" \\
+  "${genome}"
   """
 
 }
 
 
-process REHYDRATE {
+process TRANSFORM2CSV {
+  //publishDir "${params.tRNAresults}/CSVs", mode:'copy'
+
   input:
-  path unzippedDir
+  file tRNA_ss
 
   output:
-  path "$unzippedDir/ncbi_dataset/data" , emit: dataDir
+  path "${tRNA_ss.baseName}.csv" , emit: tRNACSVS
 
   script:
   """
-  datasets rehydrate \\
-     --directory $unzippedDir
+  python "$projectDir/bin/parseSS.py" $tRNA_ss
   """
 }
 
+process COMPILECSV {
+  publishDir "${params.tRNAresults}/CSVs", mode:'copy'
 
-
-process COLLECT_NAMES {
-  publishDir params.results, mode: 'copy'
+  echo true
 
   input:
-  path dataDir
+  file csvList
 
   output:
-  path "relations.tsv" , emit: org_names
+  path "organism_tRNAs.csv"
 
   script:
   """
-  python "$baseDir/bin/collect_org_names.py" $dataDir
+  python "$projectDir/bin/concatCSV.py" $csvList
+
   """
 
 }

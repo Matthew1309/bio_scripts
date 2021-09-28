@@ -5,7 +5,14 @@ import re
 
 # Given a directory, loop over the sub-directories, collecting their org_names
 # Also loop through those subdirectories, find the genomic file, and extract the
-# name from the header line
+# organism name from the header line
+
+# Most importantly get the absolute path to the file
+# using os.path.realpath(content2)
+
+# If this doesn't work aka len(ncbi) =/= len(org_list)
+# Most likely reason is the org_exp regex.
+
 rootDataDir = sys.argv[1]
 
 ncbi_accession = []
@@ -37,7 +44,7 @@ for filename in os.listdir(rootDataDir): # Loop over passed directory
                             #print(filename, organism_name)
                             ncbi2org[filename] = organism_name.group()[1:-1]
                             genome_file_list.append( filename2 )
-                            absolute_file_path.append( os.path.abspath(filename2) )
+                            absolute_file_path.append( os.path.realpath(content2) )
                             try:
                                 organism_list.append( organism_name.group()[1:-1] )
                             except AttributeError:
