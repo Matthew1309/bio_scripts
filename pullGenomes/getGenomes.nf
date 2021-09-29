@@ -14,7 +14,7 @@ workflow{
 }
 
 process DOWNLOAD_ZIP {
-  errorStrategy 'ignore'
+ // errorStrategy 'ignore'
 
   input:
   val taxonName
