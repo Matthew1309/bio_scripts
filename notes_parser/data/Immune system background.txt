@@ -1,0 +1,106 @@
+﻿***Header
+Index:
+
+
+Section
+	Aside
+	1. Format
+2. Overview of the Immune Response
+	1. Asides
+2. What are Granules?
+3. Interferon x Cancer?
+	
+
+Format: 
+
+
+* Title: title: Link
+Summary/thoughts/insights
+
+
+========================================================================
+Asides:
+========================================================================
+
+
+Vocab: WORD: definition;;;
+
+
+***Body
+
+
+* Title: Overview of the Immune Response: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2923430/
+
+
+Vocab: EFFECTOR: in biology this means an organ or cell that acts in response to a stimulus;;;
+Vocab: CADHERIN: a class of cell-cell connection molecules that allow cells to connect to one another;;;
+Vocab: CHEMOKINES: a special class of cytokines that attract a certain cell, like platelets to a cut;;;
+Vocab: LEUKOCYTES: another term to broadly say white blood cells;;;
+Abb: TCR: T cell receptor;;;
+Abb: Ig: Immunoglobulin, Bcell antigen receptor;;;
+Vocab: AZUROPHILIC GRANULE: A cellular object that is able to be stained by the Romanowsky stain. NK cells typically have this, and are stained purple;;;
+Vocab: INTERLEUKIN: Any protein that regulates how cells talk and communicate (cell growth, motility, differentiation);;;
+Vocab: INTERFERON: A signalling protein in response to virus. Activates macrophages and NK cells. Causes nearby cells to upregulate antigen presenting mechanisms;;;
+Vocab: ADJUVANT: a treatment applied after the first anticancer treatment. It is supposed to prevent secondary cancer formation;;;
+Abb: APC: Antigen presenting cell;;;
+
+
+	
+
+Interleukins mentioned:
+* IL-12
+* IL-4: Immune response
+* IL-10
+* IL-6
+* IL-1
+* IL-13
+* 
+
+We got an innate immune system, genetically hardcoded into us, and an adaptive immune system, which undergoes somatic mutations. 
+
+
+T-cells in particular need to be incredibly careful about recognizing self from not-self because they are tasked with detecting cells infected by viruses or bacteria.
+
+
+Epithilial Cilia sweep away the contaminated mucus of the innate immune system.
+
+
+Innate + adaptive are required to cooperate for effective host survival. Adaptive often co-op and direct the much more abundant innate infrastructure.
+
+
+Different cell groups are defined by their cell surface markers. The Human Cell Differentiation Molecules (HCDM) group is the authority on this subject matter. Natural killer cells use a different system of recognition than the Tcells, but they can also recognize cancers and virus infected cells somehow. (This is pretty darn interesting)
+
+
+=============================================================
+Aside: granules
+I think granules just mean a secreted package? From a couple papers, they don’t really define it as a particular structure, just that it is a post-golgi product (which I think is a sack filled with neat ol proteins). So I think if a cell is considered granule...something, it is a cell that often secretes stuff.
+=============================================================
+
+
+Neutrophils seem to be the fellas that munch on a bacteria and devour them, and or spew out reactive stuff like H2O2 onto the bacteria to kill them. Pretty sure this is the main white blood cell fella from cells at work. 
+
+
+=============================================================
+Aside: Interferon x Cancer?
+This paper mentions that interferon causes cells to present more stuff on their cell surface, how does this react to cancer? Can a cancer get caught in the crossfire? Is this already a treatment?
+=============================================================
+
+
+Eosinophils are meant to fight parasites. Have giant granules of nasty toxins against worms. They are prominent in allergic responses?
+
+
+I guess dendritic cells have both type1 and type2 histocompatability complex (MHC). These cells are scattered throughout body, but concentrated in lymphs. A special type of dendritic cell seems specialized to combat virus infections. 
+
+
+Left off on Antigen Recognition by T Lymphocytes/Major Histocompatibility Molecules.
+
+
+* Title: A guide to cancer immunotherapy from T cell basic science to clinical practice: https://www.nature.com/articles/s41577-020-0306-5
+
+
+Vocab: POOP: nasty stuff;;;
+
+
+==========
+Aside: Random shenanigans
+==========
