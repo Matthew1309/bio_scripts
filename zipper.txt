@@ -1,0 +1,49 @@
+#! /bin/bash
+#############################################################################
+# Usage: ./zipper.txt
+# Usage on Windows: bash ./zipper.txt
+
+# The point of this script is to go through a folder
+# and zip up all the folders inside quickly. It will 
+# output all the zipped stuff in another folder (which
+# the user can name). By default the folder is called
+# "zippedFiles/"
+
+##################################
+# User defined variables
+##################################
+# output directory name (exclude the /)
+OUTDIR='zippedFiles'  #                    <---- EDIT ME!
+
+# Thanks to Thor from
+# https://stackoverflow.com/questions/13085929/for-loop-for-every-folder-in-a-directory-excluding-some-of-them
+# this post for this solution to exclude specific
+# directories during the loop.
+shopt -s extglob
+
+
+################################
+# Beginning of script
+################################
+
+# Checks whether the output directory exists
+# if it doesn't, make it
+if [ ! -d "./$OUTDIR" ]
+then
+	echo "Directory ./$OUTDIR DOESNT exist"
+	echo "Making ./$OUTDIR"
+	mkdir "$OUTDIR"
+fi
+
+# This syntax loops only over directories
+# excluding the destination folder and zips
+# their contents into your output folder
+for i in ./!($OUTDIR)/; do
+	DIR="${i#*/}"
+	DIRNAME="${DIR%/*}"
+	ZIPNAME="$DIRNAME.zip"
+	echo "zipping $DIRNAME into $ZIPNAME"
+	zip -rjq ./"$OUTDIR"/"$ZIPNAME" "$i"
+done
+
+echo "done zipping your files :)"
