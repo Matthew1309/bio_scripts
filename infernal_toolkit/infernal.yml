@@ -1,0 +1,19 @@
+name: infernal
+
+channels:
+    - conda-forge
+    - bioconda
+    - defaults
+    - anaconda
+dependencies:
+    - python=3.8
+    - pip>=20.1.1
+    - jupyter
+    - jupyterlab
+    - pandas
+    - pandas-datareader
+    - matplotlib
+    - trnascan-se
+    - infernal
+    - clustalo
+    - biopython
