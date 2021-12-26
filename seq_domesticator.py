@@ -89,6 +89,11 @@ def alterSequence(enzymes_of_interest, results, inputSequence):
         # Based on what frame the site is in
         # start at a different spot
 
+        # I don't feel like actually doing this, but
+        # the frame doesn't mean the frame of the recog
+        # sequence, it means of the recog seq's location
+        # in the main sequnce, therefore this extends the location
+        # properly!
         if frame == 1:
             startPoint = 2
         elif frame == 2:
