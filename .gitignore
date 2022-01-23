@@ -1,2 +1,5 @@
 .nextflow/
 .nextflow*
+*.fna
+*.fa
+*.tsv
