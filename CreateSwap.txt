@@ -1,0 +1,35 @@
+# This was written by Farshad Farshidfar, and it somehow
+# increases the amount of allocated swap memory to artificially
+# increase the amount of RAM we have. This obviously reduces speed
+# but in a pinch it helps out. I currently have no idea how
+# it works.
+
+# Create additional "file" swap for the first time 
+rm /SRA_store/swap2 # removes the previous draft
+sudo dd if=/dev/zero of=/SRA_store/swap2 bs=1M count=32768
+	# 32768+0 records in
+	# 32768+0 records out
+	# 34359738368 bytes (34 GB) copied, 47.4907 s, 724 MB/s
+# 1048576
+# sudo fallocate -l 25G /SRA_store/swap2
+
+sudo chmod 600 /SRA_store/swap2
+sudo mkswap /SRA_store/swap2
+	# Setting up swapspace version 1, size = 33554428 KiB
+	# no label, UUID=9abef618-d185-4136-95c2-750d157bf592
+		# Setting up swapspace version 1, size = 26214396 KiB
+		# no label, UUID=9c0edc4e-ac82-4736-bb74-f4193282fc06
+
+sudo swapon /SRA_store/swap2
+
+# See Status
+swapon -s
+
+# sudo swapon -U 9c0edc4e-ac82-4736-bb74-f4193282fc06
+
+# Change size instructions
+sudo swapoff /SRA_store/swap2
+sudo dd if=/dev/zero of=/SRA_store/swap2 bs=1M count=131072 oflag=append conv=notrunc
+sudo chmod 600 /SRA_store/swap2
+sudo mkswap /SRA_store/swap2
+sudo swapon /SRA_store/swap2
